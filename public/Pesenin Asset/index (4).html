@@ -1,0 +1,439 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Pesenin - Home Food Ordering System
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: 'Montserrat', sans-serif;
+    }
+   /* Custom hover effect for buttons */
+   .btn-white {
+     position: relative;
+     overflow: hidden;
+     transition: color 0.3s ease;
+   }
+   .btn-white::before {
+     content: "";
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     width: 0;
+     height: 0;
+     background: rgba(13, 110, 111, 0.15); /* teal-700 with opacity */
+     border-radius: 9999px;
+     transform: translate(-50%, -50%);
+     transition: width 0.4s ease, height 0.4s ease;
+     z-index: 0;
+   }
+   .btn-white:hover::before {
+     width: 300%;
+     height: 300%;
+   }
+   .btn-white > * {
+     position: relative;
+     z-index: 10;
+   }
+
+   .btn-teal {
+     position: relative;
+     overflow: hidden;
+     transition: background-color 0.3s ease;
+   }
+   .btn-teal::before {
+     content: "";
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     width: 0;
+     height: 0;
+     background: rgba(255, 255, 255, 0.15);
+     border-radius: 9999px;
+     transform: translate(-50%, -50%);
+     transition: width 0.4s ease, height 0.4s ease;
+     z-index: 0;
+   }
+   .btn-teal:hover::before {
+     width: 300%;
+     height: 300%;
+   }
+   .btn-teal > * {
+     position: relative;
+     z-index: 10;
+   }
+  </style>
+ </head>
+ <body class="bg-white text-gray-900">
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed w-full z-30">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+     <a class="flex items-center space-x-2" href="#">
+      <img alt="Pesenin logo with stylized P letter in dark teal and gray" class="h-10 w-10 rounded-full" height="40" src="https://storage.googleapis.com/a1aa/image/6000b055-fb10-430d-976c-4e1a7014fecb.jpg" width="40"/>
+      <span class="text-2xl font-bold text-teal-700">
+       PesenIn
+      </span>
+     </a>
+     <div class="hidden md:flex space-x-8 font-semibold text-teal-700">
+      <a class="hover:text-teal-800 transition" href="#">
+       Home
+      </a>
+      <a class="hover:text-teal-800 transition" href="#menu">
+       Menu
+      </a>
+      <a class="hover:text-teal-800 transition" href="#how-it-works">
+       How It Works
+      </a>
+      <a class="hover:text-teal-800 transition" href="#about">
+       About
+      </a>
+      <a class="hover:text-teal-800 transition" href="#contact">
+       Contact
+      </a>
+     </div>
+     <div class="hidden md:flex items-center space-x-4">
+      <button class="bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800 transition">
+       Login
+      </button>
+      <button class="bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800 transition">
+       Sign Up
+      </button>
+     </div>
+     <div class="md:hidden">
+      <button aria-label="Toggle menu" class="text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500" id="mobile-menu-button">
+       <i class="fas fa-bars fa-lg">
+       </i>
+      </button>
+     </div>
+    </div>
+   </div>
+   <div class="hidden md:hidden bg-white shadow-md" id="mobile-menu">
+    <a class="block px-4 py-3 border-b border-gray-200 hover:bg-teal-50 text-teal-700 font-semibold" href="#">
+     Home
+    </a>
+    <a class="block px-4 py-3 border-b border-gray-200 hover:bg-teal-50" href="#menu">
+     Menu
+    </a>
+    <a class="block px-4 py-3 border-b border-gray-200 hover:bg-teal-50" href="#how-it-works">
+     How It Works
+    </a>
+    <a class="block px-4 py-3 border-b border-gray-200 hover:bg-teal-50" href="#about">
+     About
+    </a>
+    <a class="block px-4 py-3 hover:bg-teal-50" href="#contact">
+     Contact
+    </a>
+    <div class="flex flex-col space-y-2 p-4 border-t border-gray-200">
+     <button class="bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800 transition w-full">
+      Login
+     </button>
+     <button class="bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800 transition w-full">
+      Sign Up
+     </button>
+    </div>
+   </div>
+  </nav>
+  <!-- Hero Section -->
+  <header class="pt-20 bg-teal-700">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center md:justify-between min-h-[500px]">
+    <div class="text-center md:text-left max-w-xl">
+     <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight">
+      Delicious Home-Cooked Meals Delivered To Your Doorstep
+     </h1>
+     <p class="mt-6 text-lg text-teal-100">
+      Choose from a variety of authentic home-cooked dishes made with love by local chefs.
+     </p>
+     <div class="mt-8 flex justify-center md:justify-start space-x-4">
+      <a class="btn-white bg-white text-teal-700 font-semibold px-6 py-3 rounded-lg shadow-lg transition inline-flex items-center" href="#menu">
+       <i class="fas fa-utensils mr-2">
+       </i>
+       View Menu
+      </a>
+      <a class="btn-teal bg-teal-700 text-teal-100 font-semibold px-6 py-3 rounded-lg shadow-lg transition inline-flex items-center" href="#how-it-works">
+       <i class="fas fa-info-circle mr-2">
+       </i>
+       How It Works
+      </a>
+     </div>
+    </div>
+    <div class="mt-10 md:mt-0">
+     <img alt="A delicious home cooked meal on a white plate with fresh vegetables and colorful presentation" class="rounded-lg shadow-lg mx-auto md:mx-0 max-w-full h-auto" height="400" loading="lazy" src="https://storage.googleapis.com/a1aa/image/bbad3aa5-478b-4a70-5fd7-3e65b75f509b.jpg" width="500"/>
+    </div>
+   </div>
+  </header>
+  <!-- Menu Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" id="menu">
+   <h2 class="text-3xl font-extrabold text-center text-teal-700 mb-12">
+    Our Menu
+   </h2>
+   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+    <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+     <img alt="Spaghetti Bolognese with fresh tomato sauce and parmesan cheese on a white plate" class="w-full h-48 object-cover" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/2ae879f5-aebb-4f88-8ff0-892c6438125a.jpg" width="400"/>
+     <div class="p-6">
+      <h3 class="text-xl font-semibold text-gray-900 mb-2">
+       Spaghetti Bolognese
+      </h3>
+      <p class="text-gray-600 mb-4">
+       Classic Italian pasta with rich homemade meat sauce and parmesan cheese.
+      </p>
+      <div class="flex items-center justify-between">
+       <span class="text-teal-700 font-bold text-lg">
+        $12.99
+       </span>
+       <button class="bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800 transition flex items-center">
+        <i class="fas fa-cart-plus mr-2">
+        </i>
+        Add to Cart
+       </button>
+      </div>
+     </div>
+    </article>
+    <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+     <img alt="Grilled chicken breast with herbs and roasted vegetables on a rustic plate" class="w-full h-48 object-cover" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/6d3ec731-b97c-4dc6-fb69-a47dbc748d91.jpg" width="400"/>
+     <div class="p-6">
+      <h3 class="text-xl font-semibold text-gray-900 mb-2">
+       Grilled Herb Chicken
+      </h3>
+      <p class="text-gray-600 mb-4">
+       Juicy grilled chicken breast marinated with fresh herbs served with roasted veggies.
+      </p>
+      <div class="flex items-center justify-between">
+       <span class="text-teal-700 font-bold text-lg">
+        $14.50
+       </span>
+       <button class="bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800 transition flex items-center">
+        <i class="fas fa-cart-plus mr-2">
+        </i>
+        Add to Cart
+       </button>
+      </div>
+     </div>
+    </article>
+    <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+     <img alt="Vegan quinoa salad with fresh vegetables and lemon dressing in a white bowl" class="w-full h-48 object-cover" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/961ff278-63c2-41a2-3947-54b3d65587b4.jpg" width="400"/>
+     <div class="p-6">
+      <h3 class="text-xl font-semibold text-gray-900 mb-2">
+       Vegan Quinoa Salad
+      </h3>
+      <p class="text-gray-600 mb-4">
+       Healthy and refreshing quinoa salad with cucumbers, tomatoes, and lemon dressing.
+      </p>
+      <div class="flex items-center justify-between">
+       <span class="text-teal-700 font-bold text-lg">
+        $11.00
+       </span>
+       <button class="bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800 transition flex items-center">
+        <i class="fas fa-cart-plus mr-2">
+        </i>
+        Add to Cart
+       </button>
+      </div>
+     </div>
+    </article>
+    <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+     <img alt="Hearty beef stew with carrots and potatoes in a rustic bowl" class="w-full h-48 object-cover" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/5f7eae51-e301-4074-72d4-dd0171a72cf2.jpg" width="400"/>
+     <div class="p-6">
+      <h3 class="text-xl font-semibold text-gray-900 mb-2">
+       Hearty Beef Stew
+      </h3>
+      <p class="text-gray-600 mb-4">
+       Slow-cooked beef stew with tender meat, carrots, and potatoes in rich gravy.
+      </p>
+      <div class="flex items-center justify-between">
+       <span class="text-teal-700 font-bold text-lg">
+        $15.75
+       </span>
+       <button class="bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800 transition flex items-center">
+        <i class="fas fa-cart-plus mr-2">
+        </i>
+        Add to Cart
+       </button>
+      </div>
+     </div>
+    </article>
+    <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+     <img alt="Classic Margherita pizza with fresh basil leaves and melted mozzarella cheese" class="w-full h-48 object-cover" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/b8f6dda1-f8bb-42f4-8bde-554f91d5c4e6.jpg" width="400"/>
+     <div class="p-6">
+      <h3 class="text-xl font-semibold text-gray-900 mb-2">
+       Margherita Pizza
+      </h3>
+      <p class="text-gray-600 mb-4">
+       Thin crust pizza topped with fresh tomato sauce, mozzarella, and basil leaves.
+      </p>
+      <div class="flex items-center justify-between">
+       <span class="text-teal-700 font-bold text-lg">
+        $13.25
+       </span>
+       <button class="bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800 transition flex items-center">
+        <i class="fas fa-cart-plus mr-2">
+        </i>
+        Add to Cart
+       </button>
+      </div>
+     </div>
+    </article>
+    <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+     <img alt="Chocolate lava cake with melting center served with vanilla ice cream and mint leaf garnish" class="w-full h-48 object-cover" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/3a921090-5cf9-429f-b95c-7e5e62315c89.jpg" width="400"/>
+     <div class="p-6">
+      <h3 class="text-xl font-semibold text-gray-900 mb-2">
+       Chocolate Lava Cake
+      </h3>
+      <p class="text-gray-600 mb-4">
+       Warm chocolate cake with a gooey center served with creamy vanilla ice cream.
+      </p>
+      <div class="flex items-center justify-between">
+       <span class="text-teal-700 font-bold text-lg">
+        $7.50
+       </span>
+       <button class="bg-teal-700 text-white px-4 py-2 rounded-md hover:bg-teal-800 transition flex items-center">
+        <i class="fas fa-cart-plus mr-2">
+        </i>
+        Add to Cart
+       </button>
+      </div>
+     </div>
+    </article>
+   </div>
+  </section>
+  <!-- How It Works Section -->
+  <section class="bg-white py-16" id="how-it-works">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-extrabold text-center text-teal-700 mb-12">
+     How It Works
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+     <div class="flex flex-col items-center text-center px-6">
+      <div class="bg-teal-100 text-teal-700 rounded-full p-5 mb-6">
+       <i class="fas fa-search fa-3x">
+       </i>
+      </div>
+      <h3 class="text-xl font-semibold mb-2 text-gray-900">
+       Browse Menu
+      </h3>
+      <p class="text-gray-600">
+       Explore a wide variety of home-cooked meals prepared by local chefs.
+      </p>
+     </div>
+     <div class="flex flex-col items-center text-center px-6">
+      <div class="bg-teal-100 text-teal-700 rounded-full p-5 mb-6">
+       <i class="fas fa-shopping-cart fa-3x">
+       </i>
+      </div>
+      <h3 class="text-xl font-semibold mb-2 text-gray-900">
+       Place Your Order
+      </h3>
+      <p class="text-gray-600">
+       Select your favorite dishes and add them to your cart with ease.
+      </p>
+     </div>
+     <div class="flex flex-col items-center text-center px-6">
+      <div class="bg-teal-100 text-teal-700 rounded-full p-5 mb-6">
+       <i class="fas fa-truck fa-3x">
+       </i>
+      </div>
+      <h3 class="text-xl font-semibold mb-2 text-gray-900">
+       Delivered To You
+      </h3>
+      <p class="text-gray-600">
+       Enjoy fresh, delicious meals delivered right to your doorstep.
+      </p>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- About Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-teal-50 rounded-lg mx-4 md:mx-0" id="about">
+   <div class="flex flex-col md:flex-row items-center md:space-x-12">
+    <div class="md:w-1/2 mb-10 md:mb-0">
+     <img alt="Friendly home chef preparing fresh meals in a cozy kitchen with natural light and warm atmosphere" class="rounded-lg shadow-lg w-full h-auto" height="400" loading="lazy" src="https://storage.googleapis.com/a1aa/image/150a2bda-8bb7-41d5-25d1-622d3cc0d668.jpg" width="600"/>
+    </div>
+    <div class="md:w-1/2">
+     <h2 class="text-3xl font-extrabold text-teal-700 mb-6">
+      About Pesenin
+     </h2>
+     <p class="text-gray-700 mb-4">
+      Pesenin is a platform that connects you with passionate home chefs who prepare authentic, delicious meals using fresh ingredients. We believe in supporting local cooks and bringing the comfort of home-cooked food to your table.
+     </p>
+     <p class="text-gray-700">
+      Whether you want a quick lunch, a family dinner, or a special treat, Pesenin makes it easy to order meals that feel like they were made just for you.
+     </p>
+    </div>
+   </div>
+  </section>
+  <!-- Contact Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" id="contact">
+   <h2 class="text-3xl font-extrabold text-center text-teal-700 mb-12">
+    Contact Us
+   </h2>
+   <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8">
+    <form action="#" class="space-y-6" method="POST" novalidate="">
+     <div>
+      <label class="block text-gray-700 font-semibold mb-2" for="name">
+       Name
+      </label>
+      <input class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" id="name" name="name" placeholder="Your full name" required="" type="text"/>
+     </div>
+     <div>
+      <label class="block text-gray-700 font-semibold mb-2" for="email">
+       Email
+      </label>
+      <input class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" id="email" name="email" placeholder="you@example.com" required="" type="email"/>
+     </div>
+     <div>
+      <label class="block text-gray-700 font-semibold mb-2" for="message">
+       Message
+      </label>
+      <textarea class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500" id="message" name="message" placeholder="Write your message here" required="" rows="4"></textarea>
+     </div>
+     <div class="text-center">
+      <button class="bg-teal-700 text-white px-6 py-3 rounded-md font-semibold hover:bg-teal-800 transition inline-flex items-center" type="submit">
+       <i class="fas fa-paper-plane mr-2">
+       </i>
+       Send Message
+      </button>
+     </div>
+    </form>
+   </div>
+  </section>
+  <!-- Footer -->
+  <footer class="bg-teal-700 text-teal-100 py-8 mt-16">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+    <p class="text-sm">
+     © 2024 Pesenin. All rights reserved.
+    </p>
+    <div class="flex space-x-6 mt-4 md:mt-0">
+     <a aria-label="Facebook" class="hover:text-white transition" href="#">
+      <i class="fab fa-facebook fa-lg">
+      </i>
+     </a>
+     <a aria-label="Twitter" class="hover:text-white transition" href="#">
+      <i class="fab fa-twitter fa-lg">
+      </i>
+     </a>
+     <a aria-label="Instagram" class="hover:text-white transition" href="#">
+      <i class="fab fa-instagram fa-lg">
+      </i>
+     </a>
+     <a aria-label="LinkedIn" class="hover:text-white transition" href="#">
+      <i class="fab fa-linkedin fa-lg">
+      </i>
+     </a>
+    </div>
+   </div>
+  </footer>
+  <script>
+   const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+ </body>
+</html>

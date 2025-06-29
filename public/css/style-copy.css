@@ -1,0 +1,837 @@
+/* style.css */
+
+/* --- Import Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900;1,400..900&display=swap');
+
+/* --- Variabel Warna & Font --- */
+:root {
+    --primary-color: hsl(30, 90%, 60%); /* Oranye Peach Hangat (#FF9966) */
+    --secondary-color: hsl(120, 40%, 45%); /* Hijau Daun Segar (#4CAF50) */
+    --accent-color: hsl(45, 100%, 70%); /* Kuning Emas Cerah (#FFD700) */
+    --text-color-dark: #333333; /* Abu-abu gelap halus */
+    --text-color-light: #FFFFFF; /* Putih */
+    --bg-light: #FDFDFD; /* Latar belakang terang (hampir putih) */
+    --bg-dark: #3E3E3E; /* Latar belakang gelap (footer) */
+    --card-bg: #FFFFFF;
+    --border-color: #E0E0E0; /* Border yang lebih lembut */
+    --font-branding: 'Playfair Display', serif; /* Font untuk logo/judul utama */
+    --font-body: 'Open Sans', sans-serif; /* Font untuk teks umum */
+    --box-shadow-light: 0 4px 8px rgba(0,0,0,0.08);
+    --box-shadow-medium: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* --- Reset & Gaya Dasar --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--text-color-dark);
+    background-color: var(--bg-light);
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--secondary-color);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+section {
+    padding: 60px 5%;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-family: var(--font-branding);
+    font-size: 2.8em;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 50px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Header & Navbar --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background-color: var(--card-bg);
+    box-shadow: var(--box-shadow-light);
+    flex-wrap: wrap;
+    gap: 15px;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar .logo h1 {
+    font-family: var(--font-branding);
+    color: var(--primary-color);
+    font-size: 2.8em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.navbar .nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.navbar .nav-links a {
+    color: var(--text-color-dark);
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+}
+
+.navbar .nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.navbar .nav-links a:hover::after {
+    width: 100%;
+}
+
+.navbar .auth-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar .btn-login,
+.navbar .btn-register {
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.navbar .btn-login:hover {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.navbar .btn-register {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border: 2px solid var(--primary-color);
+}
+
+.navbar .btn-register:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* --- Hero Section --- */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1600x600/FF9966/FFFFFF?text=Masakan+Rumahan+Autentik') no-repeat center center/cover;
+    color: var(--text-color-light);
+    text-align: center;
+    padding: 120px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content {
+    max-width: 900px;
+    animation: fadeIn 1.5s ease-out;
+}
+
+.hero-content h2 {
+    font-family: var(--font-branding);
+    font-size: 3.5em;
+    margin-bottom: 25px;
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-content p {
+    font-size: 1.3em;
+    margin-bottom: 40px;
+    opacity: 0.9;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-cta-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.cta-button,
+.how-it-works-button {
+    padding: 18px 35px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.2em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.cta-button:hover {
+    background-color: var(--secondary-color);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    transform: translateY(-3px);
+}
+
+.how-it-works-button:hover {
+    background-color: var(--primary-color);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    transform: translateY(-3px);
+}
+
+/* --- Search & Filter (Open for All) --- */
+.search-and-filter-open {
+    padding: 50px 5%;
+    background-color: var(--card-bg);
+    text-align: center;
+    box-shadow: var(--box-shadow-light);
+    margin-top: -50px;
+    position: relative;
+    z-index: 2;
+    border-radius: 15px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.search-input-main {
+    display: flex;
+    max-width: 700px;
+    margin: 0 auto 20px auto;
+    border: 2px solid var(--primary-color); /* Warna border utama */
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.search-input-main input {
+    border: none;
+    padding: 15px 25px;
+    outline: none;
+    flex-grow: 1;
+    font-size: 1.1em;
+    background-color: var(--bg-light);
+}
+
+.search-input-main button {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border: none;
+    padding: 15px 25px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+.search-input-main button:hover {
+    background-color: var(--secondary-color);
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filter-button {
+    background-color: var(--bg-light);
+    color: var(--text-color-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: all 0.3s ease;
+}
+
+.filter-button:hover {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border-color: var(--primary-color);
+}
+
+.filter-button.active {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border-color: var(--primary-color);
+    box-shadow: var(--box-shadow-light);
+}
+
+/* --- Food Display Section (Daftar Makanan Populer/Terlaris/Trending) --- */
+.food-display-section {
+    background-color: var(--bg-light);
+    padding: 80px 5%;
+}
+
+.food-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.food-card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow-medium);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.food-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.food-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.food-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.food-info h4 {
+    font-size: 1.4em;
+    margin-bottom: 8px;
+    color: var(--text-color-dark);
+}
+
+.food-info .vendor-name {
+    font-size: 0.9em;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.food-info .rating-review {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.food-info .rating-stars {
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.food-info .rating-stars .fas {
+    margin-right: 3px;
+}
+
+.food-info .reviews {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.food-info .short-desc {
+    font-size: 0.95em;
+    color: #555;
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+.add-to-cart-btn {
+    background-color: var(--secondary-color);
+    color: var(--text-color-light);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    align-self: flex-start;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.add-to-cart-btn:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.login-prompt {
+    font-size: 0.85em;
+    color: #999;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.login-prompt .fas {
+    color: var(--primary-color);
+    margin-right: 5px;
+}
+
+
+/* --- App Testimonials Section (Slider) --- */
+.app-testimonials {
+    background-color: var(--bg-light); /* Latar belakang section testimonial putih */
+    padding: 80px 0; /* Padding horizontal dikurangi, akan diatur oleh wrapper */
+    text-align: center;
+    box-shadow: var(--box-shadow-light);
+    margin-top: 50px;
+    border-radius: 15px;
+    margin-left: 5%;
+    margin-right: 5%;
+    position: relative;
+    overflow: hidden; /* Penting untuk menyembunyikan bagian slider yang tidak terlihat */
+}
+
+.testimonial-pretitle {
+    font-family: var(--font-body); /* Gunakan font body */
+    font-size: 1.1em;
+    color: var(--secondary-color); /* Warna hijau */
+    text-align: center;
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block; /* Agar bisa diberi border/underline */
+    padding-bottom: 5px;
+}
+.testimonial-pretitle::after {
+    content: '';
+    display: block;
+    width: 60%; /* Lebar garis bawah */
+    height: 2px;
+    background-color: var(--accent-color); /* Warna kuning */
+    margin: 5px auto 0;
+    border-radius: 2px;
+}
+
+
+.app-testimonials .section-title {
+    margin-bottom: 20px;
+    padding: 0 5%; /* Tambahkan padding agar judul tidak terlalu mepet */
+    font-size: 2.8em; /* Ukuran default */
+}
+.app-testimonials .section-title .highlight-text {
+    color: var(--primary-color); /* Warna highlight (oranye) */
+    font-family: var(--font-branding); /* Font branding untuk highlight */
+}
+
+.app-testimonials .section-subtitle {
+    margin-bottom: 50px;
+    padding: 0 5%; /* Tambahkan padding */
+    font-size: 1.2em; /* Ukuran default */
+}
+.app-testimonials .section-subtitle .highlight-text {
+    background-color: var(--accent-color); /* Latar belakang highlight (kuning) */
+    padding: 3px 8px;
+    border-radius: 5px;
+    color: var(--text-color-dark); /* Teks gelap di atas kuning */
+    font-weight: 600;
+}
+
+
+.testimonial-slider-wrapper {
+    overflow: hidden; /* Sembunyikan kartu di luar viewport */
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.testimonial-grid-slider {
+    display: flex;
+    transition: transform 0.8s ease-in-out; /* Smooth slide transition */
+    justify-content: flex-start; /* Penting agar slide bergerak dari kiri ke kanan */
+    align-items: stretch; /* Agar tinggi kartu sama */
+    flex-wrap: nowrap; /* Pastikan kartu tetap dalam satu baris */
+    padding: 0 10%; /* Memberikan ruang agar kartu samping terlihat sebagian */
+}
+
+.testimonial-card {
+    background-color: var(--card-bg); /* Latar belakang kartu default putih */
+    border-radius: 15px;
+    box-shadow: var(--box-shadow-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex-shrink: 0; /* Mencegah kartu menyusut */
+    width: calc(100% / 3 - 3%); /* Untuk tampilan 3 kartu di desktop, 3% adalah total margin horizontal */
+    margin: 0 1.5%; /* Jarak antar kartu */
+    opacity: 0.7;
+    transform: scale(0.85); /* Skala lebih kecil untuk non-aktif */
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth transition for scale and opacity */
+    position: relative;
+    padding: 50px 30px 30px; /* Padding, top lebih besar untuk quote icon */
+}
+
+.testimonial-card.active {
+    opacity: 1;
+    transform: scale(1); /* Aktif: kembali ke skala 1 (ukuran normal) */
+    box-shadow: var(--box-shadow-medium);
+    background-color: var(--primary-color); /* Latar belakang oranye */
+    color: var(--text-color-light); /* Teks putih */
+    z-index: 2; /* Pastikan kartu aktif berada di depan */
+}
+
+/* Gaya elemen dalam kartu testimonial aktif */
+.testimonial-card.active .rating-app,
+.testimonial-card.active .quote-icon .fas,
+.testimonial-card.active .author,
+.testimonial-card.active .profession {
+    color: var(--text-color-light);
+}
+.testimonial-card.active .quote-icon .fas {
+    color: rgba(255, 255, 255, 0.5); /* Ikon kutipan putih transparan saat aktif */
+}
+.testimonial-card.active .client-profile img {
+    border-color: var(--accent-color); /* Warna border foto kuning saat aktif */
+}
+.testimonial-card.active .quote {
+    color: var(--text-color-light); /* Quote putih saat aktif */
+}
+
+.testimonial-card:hover {
+    transform: scale(0.9); /* Sedikit membesar saat hover, tapi tidak sebesar active */
+    box-shadow: var(--box-shadow-medium);
+}
+
+.testimonial-card .rating-app {
+    color: var(--accent-color);
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.quote-icon {
+    position: absolute;
+    top: 15px;
+    left: 25px;
+    font-size: 2.5em;
+    color: rgba(var(--primary-color-rgb, 255, 153, 102), 0.3); /* Transparan dari primary color */
+    --primary-color-rgb: 255, 153, 102; /* Define RGB for primary color */
+}
+
+.testimonial-card .quote {
+    font-style: italic;
+    font-size: 1.1em;
+    color: var(--text-color-dark);
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.client-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    width: 100%;
+    justify-content: center;
+}
+
+.client-profile img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.client-info {
+    text-align: left;
+}
+
+.client-info .author {
+    font-weight: 700;
+    font-size: 1.1em;
+    color: var(--primary-color);
+    margin-bottom: 3px;
+}
+
+.client-info .profession {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.testimonial-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    gap: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: var(--border-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.dot.active {
+    background-color: var(--primary-color);
+    transform: scale(1.3);
+}
+
+.dot:hover {
+    background-color: var(--secondary-color);
+}
+
+/* --- Footer --- */
+footer {
+    background-color: var(--bg-dark);
+    color: var(--text-color-light);
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 0.9em;
+    margin-top: 50px;
+}
+
+.social-links {
+    margin-top: 15px;
+}
+
+.social-links a {
+    color: var(--text-color-light);
+    font-size: 1.5em;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--accent-color);
+}
+
+/* --- Animasi --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Responsivitas --- */
+@media (max-width: 992px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .navbar .logo {
+        width: 100%;
+        text-align: center;
+    }
+    .navbar .logo h1 {
+        font-size: 2.5em;
+        margin-right: 0;
+    }
+    .navbar .nav-links {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+    .navbar .auth-buttons {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hero-content h2 {
+        font-size: 2.8em;
+    }
+    .hero-content p {
+        font-size: 1.1em;
+    }
+    .cta-button, .how-it-works-button {
+        padding: 15px 30px;
+        font-size: 1.1em;
+    }
+
+    .section-title {
+        font-size: 2.2em;
+    }
+    .section-subtitle {
+        font-size: 1em;
+    }
+
+    .testimonial-card {
+        width: 45%; /* Tampilkan 2 kartu di layar sedang */
+        margin: 0 2.5%;
+        padding-top: 40px;
+    }
+    .testimonial-card .quote-icon {
+        font-size: 2em;
+    }
+    .testimonial-grid-slider {
+        padding: 0 5%; /* Kurangi padding samping untuk 2 kartu */
+    }
+}
+
+@media (max-width: 768px) {
+    section {
+        padding: 40px 5%;
+    }
+    .hero-section {
+        padding: 80px 20px;
+        min-height: 400px;
+    }
+
+    .hero-content h2 {
+        font-size: 2.2em;
+    }
+    .hero-content p {
+        font-size: 1em;
+    }
+    .cta-button, .how-it-works-button {
+        width: 100%;
+        max-width: 300px;
+    }
+    .hero-cta-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search-and-filter-open {
+        margin-top: -30px;
+        padding: 30px 5%;
+    }
+    .search-input-main {
+        flex-direction: column;
+    }
+    .search-input-main input,
+    .search-input-main button {
+        width: 100%;
+        border-radius: 0;
+    }
+    .search-input-main input {
+        border-bottom: 1px solid var(--border-color);
+    }
+    .search-input-main button {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filter-button {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .food-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .food-info .short-desc {
+        min-height: unset;
+    }
+
+    .testimonial-card {
+        width: 90%; /* Hanya tampilkan 1 kartu utama di mobile */
+        margin: 0 5%;
+    }
+    .testimonial-grid-slider {
+        justify-content: flex-start; /* Untuk scroll yang halus */
+        padding: 0 5%; /* Biarkan padding di sini untuk efek sampingan */
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar .logo h1 {
+        font-size: 2em;
+    }
+    .navbar .nav-links {
+        font-size: 0.9em;
+        gap: 15px;
+    }
+    .navbar .btn-login, .navbar .btn-register {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+
+    .hero-content h2 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+    .hero-content p {
+        font-size: 0.9em;
+        margin-bottom: 25px;
+    }
+    .cta-button, .how-it-works-button {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+
+    .section-title {
+        font-size: 1.8em;
+    }
+    .section-subtitle {
+        font-size: 0.9em;
+    }
+
+    .food-info h4 {
+        font-size: 1.2em;
+    }
+    .food-info .rating-review, .food-info .short-desc {
+        font-size: 0.85em;
+    }
+    .add-to-cart-btn {
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
+
+    .testimonial-card .quote {
+        font-size: 1em;
+    }
+    .testimonial-card .author {
+        font-size: 0.85em;
+    }
+}

@@ -1,0 +1,964 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pesenin - Home Food Ordering System</title>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* Reset and base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #ffffff;
+      color: #1a202c; /* gray-900 */
+      line-height: 1.5;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    button {
+      cursor: pointer;
+      font-family: inherit;
+      border: none;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1120px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #225e59; /* teal-700 */
+    }
+    .nav-logo img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-weight: 600;
+      color: #225e59;
+    }
+    .nav-links a {
+      position: relative;
+      padding: 0.25rem 0;
+      transition: color 0.3s ease;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus {
+      color: #1c4f4a; /* darker teal */
+      outline: none;
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+    .btn {
+      background-color: #225e59;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+    }
+    .btn:hover,
+    .btn:focus {
+      background-color: #1c4f4a;
+      outline: none;
+    }
+
+    /* Mobile menu button */
+    .mobile-menu-button {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #225e59;
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background-color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      z-index: 999;
+    }
+    .mobile-menu a,
+    .mobile-menu button {
+      padding: 1rem;
+      border-bottom: 1px solid #e2e8f0; /* gray-200 */
+      color: #225e59;
+      font-weight: 600;
+      background-color: transparent;
+      text-align: left;
+      width: 100%;
+      font-size: 1rem;
+    }
+    .mobile-menu a:hover,
+    .mobile-menu button:hover,
+    .mobile-menu a:focus,
+    .mobile-menu button:focus {
+      background-color: #e6fffa; /* teal-50 */
+      outline: none;
+    }
+    .mobile-menu-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem;
+      border-top: 1px solid #e2e8f0;
+    }
+    .mobile-menu-buttons button {
+      background-color: #225e59;
+      color: #fff;
+      border-radius: 6px;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      width: 100%;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .mobile-menu-buttons button:hover,
+    .mobile-menu-buttons button:focus {
+      background-color: #1c4f4a;
+      outline: none;
+    }
+
+    /* Hero Section */
+    header.hero {
+      padding-top: 80px;
+      background-color: #225e59;
+      color: #d1f5f0; /* teal-100 */
+      min-height: 500px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .hero-text {
+      max-width: 480px;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .hero-text {
+        text-align: left;
+      }
+    }
+    .hero-text h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #ffffff;
+      margin: 0;
+    }
+    .hero-text p {
+      margin-top: 1.5rem;
+      font-size: 1.125rem;
+      color: #a7d8d3; /* lighter teal */
+    }
+    .hero-buttons {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    @media (min-width: 768px) {
+      .hero-buttons {
+        justify-content: flex-start;
+      }
+    }
+    .btn-try {
+      background-color: #225e59;
+      color: #d1f5f0;
+      font-weight: 600;
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      font-size: 1.125rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-width: 160px;
+      line-height: 1.2;
+      transition: background-color 0.3s ease;
+      flex-shrink: 0;
+    }
+    .btn-try:hover,
+    .btn-try:focus {
+      background-color: #1c4f4a;
+      outline: none;
+    }
+    .btn-white {
+      background-color: #ffffff;
+      color: #225e59;
+      font-weight: 600;
+      border-radius: 12px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 8px rgba(13, 110, 111, 0.15);
+      flex-shrink: 0;
+      min-width: 160px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .btn-white:hover,
+    .btn-white:focus {
+      background-color: #e6fffa; /* teal-50 */
+      outline: none;
+    }
+    .btn-teal {
+      background-color: #225e59;
+      color: #d1f5f0;
+      font-weight: 600;
+      border-radius: 12px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.15);
+      flex-shrink: 0;
+      min-width: 160px;
+      transition: background-color 0.3s ease;
+    }
+    .btn-teal:hover,
+    .btn-teal:focus {
+      background-color: #1c4f4a;
+      outline: none;
+    }
+
+    /* Hero image */
+    .hero-image {
+      max-width: 500px;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    /* Sections */
+    section {
+      padding: 4rem 1rem;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    h2.section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #225e59;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    /* Menu grid */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    @media (min-width: 640px) {
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .menu-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .menu-item {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.3s ease;
+    }
+    .menu-item:hover,
+    .menu-item:focus-within {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      outline: none;
+    }
+    .menu-item img {
+      height: 180px;
+      object-fit: cover;
+      width: 100%;
+      flex-shrink: 0;
+    }
+    .menu-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .menu-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1a202c;
+      margin: 0 0 0.5rem 0;
+    }
+    .menu-desc {
+      color: #4a5568; /* gray-600 */
+      flex-grow: 1;
+      margin-bottom: 1rem;
+    }
+    .menu-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .menu-price {
+      font-weight: 700;
+      color: #225e59;
+      font-size: 1.125rem;
+    }
+    .btn-cart {
+      background-color: #225e59;
+      color: #fff;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background-color 0.3s ease;
+      border: none;
+    }
+    .btn-cart:hover,
+    .btn-cart:focus {
+      background-color: #1c4f4a;
+      outline: none;
+    }
+
+    /* How It Works */
+    .how-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .how-grid {
+        grid-template-columns: repeat(3, 1fr);
+        text-align: left;
+      }
+    }
+    .how-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .how-icon {
+      background-color: #c6f1ed; /* teal-100 */
+      color: #225e59;
+      border-radius: 9999px;
+      padding: 1rem;
+      font-size: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 72px;
+      height: 72px;
+      flex-shrink: 0;
+    }
+    .how-title {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #1a202c;
+      margin: 0;
+    }
+    .how-desc {
+      color: #4a5568;
+      margin: 0;
+      max-width: 320px;
+    }
+
+    /* About Section */
+    .about-section {
+      background-color: #e6fffa; /* teal-50 */
+      border-radius: 12px;
+      padding: 3rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center;
+    }
+    @media (min-width: 768px) {
+      .about-section {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+    }
+    .about-image {
+      flex: 1 1 50%;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+    }
+    .about-text {
+      flex: 1 1 50%;
+      max-width: 600px;
+    }
+    .about-text h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #225e59;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    .about-text p {
+      color: #4a5568;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 2rem;
+    }
+    .contact-section h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #225e59;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    form label {
+      display: block;
+      font-weight: 600;
+      color: #4a5568;
+      margin-bottom: 0.5rem;
+    }
+    form input,
+    form textarea {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #cbd5e0; /* gray-300 */
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: inherit;
+      color: #1a202c;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    form input:focus,
+    form textarea:focus {
+      outline: none;
+      border-color: #38b2ac; /* teal-500 */
+      box-shadow: 0 0 0 3px rgba(56, 178, 172, 0.4);
+    }
+    form textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    form button[type="submit"] {
+      background-color: #225e59;
+      color: #fff;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+      margin: 0 auto;
+    }
+    form button[type="submit"]:hover,
+    form button[type="submit"]:focus {
+      background-color: #1c4f4a;
+      outline: none;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #225e59;
+      color: #d1f5f0;
+      padding: 2rem 1rem;
+      margin-top: 4rem;
+    }
+    footer .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.875rem;
+    }
+    @media (min-width: 768px) {
+      footer .container {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+    footer .social-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    footer .social-links a {
+      color: #d1f5f0;
+      font-size: 1.25rem;
+      transition: color 0.3s ease;
+    }
+    footer .social-links a:hover,
+    footer .social-links a:focus {
+      color: #ffffff;
+      outline: none;
+    }
+  </style>
+ </head>
+ <body>
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" aria-label="Pesenin Home">
+        <img
+          src="https://storage.googleapis.com/a1aa/image/6000b055-fb10-430d-976c-4e1a7014fecb.jpg"
+          alt="Pesenin logo with stylized P letter in dark teal and gray"
+          width="40"
+          height="40"
+        />
+        <span>Pesenin</span>
+      </a>
+      <div class="nav-links" id="nav-links">
+        <a href="#" tabindex="0">Home</a>
+        <a href="#menu" tabindex="0">Menu</a>
+        <a href="#how-it-works" tabindex="0">How It Works</a>
+        <a href="#about" tabindex="0">About</a>
+        <a href="#contact" tabindex="0">Contact</a>
+      </div>
+      <div class="nav-buttons">
+        <button type="button" class="btn" tabindex="0">Login</button>
+        <button type="button" class="btn" tabindex="0">Sign Up</button>
+      </div>
+      <button
+        class="mobile-menu-button"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        id="mobile-menu-button"
+      >
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <a href="#" tabindex="-1">Home</a>
+      <a href="#menu" tabindex="-1">Menu</a>
+      <a href="#how-it-works" tabindex="-1">How It Works</a>
+      <a href="#about" tabindex="-1">About</a>
+      <a href="#contact" tabindex="-1">Contact</a>
+      <div class="mobile-menu-buttons">
+        <button type="button" tabindex="-1">Login</button>
+        <button type="button" tabindex="-1">Sign Up</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero container" role="banner">
+    <div class="hero-text">
+      <h1>Delicious Home-Cooked Meals Delivered To Your Doorstep</h1>
+      <p>
+        Choose from a variety of authentic home-cooked dishes made with love by
+        local chefs.
+      </p>
+      <div class="hero-buttons" role="group" aria-label="Hero call to action buttons">
+        <a href="#try-now" class="btn-try" tabindex="0"
+          ><i class="fas fa-sign-in-alt" aria-hidden="true"></i>Try Now</a
+        >
+        <a href="#menu" class="btn-white" tabindex="0"
+          ><i class="fas fa-utensils" aria-hidden="true"></i>View Menu</a
+        >
+        <a href="#how-it-works" class="btn-teal" tabindex="0"
+          ><i class="fas fa-info-circle" aria-hidden="true"></i>How It Works</a
+        >
+      </div>
+    </div>
+    <img
+      src="https://storage.googleapis.com/a1aa/image/bbad3aa5-478b-4a70-5fd7-3e65b75f509b.jpg"
+      alt="A delicious home cooked meal on a white plate with fresh vegetables and colorful presentation"
+      class="hero-image"
+      width="500"
+      height="400"
+      loading="lazy"
+    />
+  </header>
+
+  <!-- Menu Section -->
+  <section id="menu" class="container" aria-labelledby="menu-title">
+    <h2 id="menu-title" class="section-title">Our Menu</h2>
+    <div class="menu-grid">
+      <article class="menu-item" tabindex="0">
+        <img
+          src="https://storage.googleapis.com/a1aa/image/2ae879f5-aebb-4f88-8ff0-892c6438125a.jpg"
+          alt="Spaghetti Bolognese with fresh tomato sauce and parmesan cheese on a white plate"
+          width="400"
+          height="300"
+          loading="lazy"
+        />
+        <div class="menu-content">
+          <h3 class="menu-title">Spaghetti Bolognese</h3>
+          <p class="menu-desc">
+            Classic Italian pasta with rich homemade meat sauce and parmesan
+            cheese.
+          </p>
+          <div class="menu-footer">
+            <span class="menu-price">$12.99</span>
+            <button class="btn-cart" type="button" tabindex="0">
+              <i class="fas fa-cart-plus" aria-hidden="true"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+      <article class="menu-item" tabindex="0">
+        <img
+          src="https://storage.googleapis.com/a1aa/image/6d3ec731-b97c-4dc6-fb69-a47dbc748d91.jpg"
+          alt="Grilled chicken breast with herbs and roasted vegetables on a rustic plate"
+          width="400"
+          height="300"
+          loading="lazy"
+        />
+        <div class="menu-content">
+          <h3 class="menu-title">Grilled Herb Chicken</h3>
+          <p class="menu-desc">
+            Juicy grilled chicken breast marinated with fresh herbs served with
+            roasted veggies.
+          </p>
+          <div class="menu-footer">
+            <span class="menu-price">$14.50</span>
+            <button class="btn-cart" type="button" tabindex="0">
+              <i class="fas fa-cart-plus" aria-hidden="true"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+      <article class="menu-item" tabindex="0">
+        <img
+          src="https://storage.googleapis.com/a1aa/image/961ff278-63c2-41a2-3947-54b3d65587b4.jpg"
+          alt="Vegan quinoa salad with fresh vegetables and lemon dressing in a white bowl"
+          width="400"
+          height="300"
+          loading="lazy"
+        />
+        <div class="menu-content">
+          <h3 class="menu-title">Vegan Quinoa Salad</h3>
+          <p class="menu-desc">
+            Healthy and refreshing quinoa salad with cucumbers, tomatoes, and
+            lemon dressing.
+          </p>
+          <div class="menu-footer">
+            <span class="menu-price">$11.00</span>
+            <button class="btn-cart" type="button" tabindex="0">
+              <i class="fas fa-cart-plus" aria-hidden="true"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+      <article class="menu-item" tabindex="0">
+        <img
+          src="https://storage.googleapis.com/a1aa/image/5f7eae51-e301-4074-72d4-dd0171a72cf2.jpg"
+          alt="Hearty beef stew with carrots and potatoes in a rustic bowl"
+          width="400"
+          height="300"
+          loading="lazy"
+        />
+        <div class="menu-content">
+          <h3 class="menu-title">Hearty Beef Stew</h3>
+          <p class="menu-desc">
+            Slow-cooked beef stew with tender meat, carrots, and potatoes in
+            rich gravy.
+          </p>
+          <div class="menu-footer">
+            <span class="menu-price">$15.75</span>
+            <button class="btn-cart" type="button" tabindex="0">
+              <i class="fas fa-cart-plus" aria-hidden="true"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+      <article class="menu-item" tabindex="0">
+        <img
+          src="https://storage.googleapis.com/a1aa/image/b8f6dda1-f8bb-42f4-8bde-554f91d5c4e6.jpg"
+          alt="Classic Margherita pizza with fresh basil leaves and melted mozzarella cheese"
+          width="400"
+          height="300"
+          loading="lazy"
+        />
+        <div class="menu-content">
+          <h3 class="menu-title">Margherita Pizza</h3>
+          <p class="menu-desc">
+            Thin crust pizza topped with fresh tomato sauce, mozzarella, and
+            basil leaves.
+          </p>
+          <div class="menu-footer">
+            <span class="menu-price">$13.25</span>
+            <button class="btn-cart" type="button" tabindex="0">
+              <i class="fas fa-cart-plus" aria-hidden="true"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+      <article class="menu-item" tabindex="0">
+        <img
+          src="https://storage.googleapis.com/a1aa/image/3a921090-5cf9-429f-b95c-7e5e62315c89.jpg"
+          alt="Chocolate lava cake with melting center served with vanilla ice cream and mint leaf garnish"
+          width="400"
+          height="300"
+          loading="lazy"
+        />
+        <div class="menu-content">
+          <h3 class="menu-title">Chocolate Lava Cake</h3>
+          <p class="menu-desc">
+            Warm chocolate cake with a gooey center served with creamy vanilla
+            ice cream.
+          </p>
+          <div class="menu-footer">
+            <span class="menu-price">$7.50</span>
+            <button class="btn-cart" type="button" tabindex="0">
+              <i class="fas fa-cart-plus" aria-hidden="true"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="container" aria-labelledby="how-title">
+    <h2 id="how-title" class="section-title">How It Works</h2>
+    <div class="how-grid">
+      <div class="how-step" tabindex="0">
+        <div class="how-icon" aria-hidden="true">
+          <i class="fas fa-search"></i>
+        </div>
+        <h3 class="how-title">Browse Menu</h3>
+        <p class="how-desc">
+          Explore a wide variety of home-cooked meals prepared by local chefs.
+        </p>
+      </div>
+      <div class="how-step" tabindex="0">
+        <div class="how-icon" aria-hidden="true">
+          <i class="fas fa-shopping-cart"></i>
+        </div>
+        <h3 class="how-title">Place Your Order</h3>
+        <p class="how-desc">
+          Select your favorite dishes and add them to your cart with ease.
+        </p>
+      </div>
+      <div class="how-step" tabindex="0">
+        <div class="how-icon" aria-hidden="true">
+          <i class="fas fa-truck"></i>
+        </div>
+        <h3 class="how-title">Delivered To You</h3>
+        <p class="how-desc">
+          Enjoy fresh, delicious meals delivered right to your doorstep.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about-section container" aria-labelledby="about-title">
+    <img
+      src="https://storage.googleapis.com/a1aa/image/150a2bda-8bb7-41d5-25d1-622d3cc0d668.jpg"
+      alt="Friendly home chef preparing fresh meals in a cozy kitchen with natural light and warm atmosphere"
+      class="about-image"
+      width="600"
+      height="400"
+      loading="lazy"
+    />
+    <div class="about-text">
+      <h2 id="about-title">About Pesenin</h2>
+      <p>
+        Pesenin is a platform that connects you with passionate home chefs who
+        prepare authentic, delicious meals using fresh ingredients. We believe
+        in supporting local cooks and bringing the comfort of home-cooked food
+        to your table.
+      </p>
+      <p>
+        Whether you want a quick lunch, a family dinner, or a special treat,
+        Pesenin makes it easy to order meals that feel like they were made just
+        for you.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="container" aria-labelledby="contact-title">
+    <h2 id="contact-title" class="section-title">Contact Us</h2>
+    <form class="contact-section" action="#" method="POST" novalidate>
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        placeholder="Your full name"
+        required
+        autocomplete="name"
+      />
+
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="you@example.com"
+        required
+        autocomplete="email"
+      />
+
+      <label for="message">Message</label>
+      <textarea
+        id="message"
+        name="message"
+        placeholder="Write your message here"
+        required
+        rows="4"
+      ></textarea>
+
+      <button type="submit" tabindex="0">
+        <i class="fas fa-paper-plane" aria-hidden="true"></i> Send Message
+      </button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2024 Pesenin. All rights reserved.</p>
+      <div class="social-links" role="list">
+        <a href="#" aria-label="Facebook" role="listitem" tabindex="0"
+          ><i class="fab fa-facebook" aria-hidden="true"></i
+        ></a>
+        <a href="#" aria-label="Twitter" role="listitem" tabindex="0"
+          ><i class="fab fa-twitter" aria-hidden="true"></i
+        ></a>
+        <a href="#" aria-label="Instagram" role="listitem" tabindex="0"
+          ><i class="fab fa-instagram" aria-hidden="true"></i
+        ></a>
+        <a href="#" aria-label="LinkedIn" role="listitem" tabindex="0"
+          ><i class="fab fa-linkedin" aria-hidden="true"></i
+        ></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+      const expanded =
+        mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+      mobileMenuButton.setAttribute('aria-expanded', !expanded);
+      if (mobileMenu.style.display === 'flex') {
+        mobileMenu.style.display = 'none';
+        // Remove tabindex from mobile menu links
+        Array.from(mobileMenu.querySelectorAll('a, button')).forEach((el) =>
+          el.setAttribute('tabindex', '-1')
+        );
+      } else {
+        mobileMenu.style.display = 'flex';
+        // Add tabindex to mobile menu links
+        Array.from(mobileMenu.querySelectorAll('a, button')).forEach((el) =>
+          el.setAttribute('tabindex', '0')
+        );
+      }
+    });
+
+    // Close mobile menu when clicking outside or resizing window
+    document.addEventListener('click', (e) => {
+      if (
+        !mobileMenu.contains(e.target) &&
+        !mobileMenuButton.contains(e.target) &&
+        mobileMenu.style.display === 'flex'
+      ) {
+        mobileMenu.style.display = 'none';
+        mobileMenuButton.setAttribute('aria-expanded', false);
+        Array.from(mobileMenu.querySelectorAll('a, button')).forEach((el) =>
+          el.setAttribute('tabindex', '-1')
+        );
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) {
+        mobileMenu.style.display = 'none';
+        mobileMenuButton.setAttribute('aria-expanded', false);
+        Array.from(mobileMenu.querySelectorAll('a, button')).forEach((el) =>
+          el.setAttribute('tabindex', '-1')
+        );
+      }
+    });
+  </script>
+ </body>
+</html>

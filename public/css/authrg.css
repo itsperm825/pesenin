@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+.register-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 380px; /* Lebar sedikit diperbesar */
+    text-align: center;
+}
+.register-container h2 {
+    margin-bottom: 25px; /* Margin bawah sedikit ditambah */
+    color: #333;
+}
+.form-group {
+    margin-bottom: 18px; /* Margin bawah diperbesar */
+    text-align: left;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 7px; /* Margin bawah label diperbesar */
+    color: #555;
+    font-weight: bold;
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group select { /* Tambahkan select di sini */
+    width: 100%;
+    padding: 12px; /* Padding diperbesar */
+    border: 1px solid #ddd;
+    border-radius: 6px; /* Border radius sedikit lebih besar */
+    box-sizing: border-box;
+    font-size: 1em; /* Ukuran font disesuaikan */
+}
+.form-group .is-invalid { /* Class untuk input yang tidak valid */
+    border-color: #e74c3c;
+}
+.error-message {
+    color: #e74c3c;
+    font-size: 0.85em; /* Ukuran font sedikit dikecilkan */
+    margin-top: 5px;
+}
+.btn { /* Kelas umum untuk tombol */
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 15px; /* Margin atas sedikit ditambah */
+}
+.btn-primary { /* Mengganti .btn-register dengan kelas yang lebih umum */
+    background-color: #007bff; /* Warna biru standar */
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #0056b3; /* Warna hover biru yang lebih gelap */
+}
+.alert { /* Gaya dasar untuk pesan alert */
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    text-align: left;
+    font-size: 0.95em;
+}
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+.login-link {
+    margin-top: 25px; /* Margin atas diperbesar */
+    font-size: 0.9em;
+    color: #666;
+}
+.login-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+.login-link a:hover {
+    text-decoration: underline;
+}
