@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\MitraDashboardController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\Mitra\ProdukController;
 
 // Halaman utama aplikasi, mengarah ke SesiController method index
 Route::get('/', [SesiController::class, 'index'])->name('home');
@@ -36,25 +37,37 @@ Route::post('/kontak/kirim', function () {return back()->with('success', 'Pesan 
 // --- GRUP ROUTE KHUSUS UNTUK MITRA YANG SUDAH LOGIN ---
     // Route untuk halaman utama dasbor mitra
 
-// --- GRUP ROUTE KHUSUS UNTUK PENGGUNA YANG SUDAH LOGIN ---
-Route::middleware(['auth', 'role:pengguna'])->prefix('pengguna')->group(function () {
-    Route::get('/beranda', [App\Http\Controllers\PenggunaController::class, 'beranda'])->name('pengguna.beranda');
+// --- GRUP ROUTE KHUSUS UNTUK PENGGUNA YANG SUDAH LOGIN --
+Route::middleware(['auth', 'verified', 'role:pengguna'])->prefix('pengguna')->group(function () {
+    Route::get('/beranda', function () {
+        // Ini sudah benar karena Anda punya view di resources/views/user/beranda.blade.php
+        return view('pengguna.beranda');
+    })->name('pengguna.beranda');
 });
 
+// Rute Mitra (Pemeriksaan Peran Dinonaktifkan)
+// Kita hanya menyisakan 'auth' dan 'verified'.
+Route::middleware(['auth', 'verified'])->prefix('mitra')->group(function () {
 
-// ... (semua route lain di atasnya)
+    // PASTIKAN RUTE INI ADA PERSIS SEPERTI INI
+    Route::get('/dashboard', function () {
+        return view('mitra.dashboard');
+    })->name('mitra.dashboard');
 
-// --- GRUP ROUTE KHUSUS UNTUK MITRA (WAJIB LOGIN & ROLE MITRA) ---
-Route::middleware(['auth', 'is-mitra'])
-    ->prefix('mitra')
-    ->name('mitra.') // <-- KUNCI PERBAIKAN: Pastikan ada titik (.) di akhir 'mitra.'
-    ->group(function () {
+    Route::resource('produk', ProdukController::class);
+});
+
+// Rute Pengguna (Pemeriksaan Peran Dinonaktifkan)
+Route::middleware(['auth', 'verified'])->prefix('pengguna')->group(function () {
+    Route::get('/beranda', );
+});
+
+Route::get('/dashboard', function () {
+    return view('mitra.dashboard'); // Arahkan ke view dashboard yang baru
+})->name('mitra.dashboard');
+
+    // --- TAMBAHKAN BARIS INI UNTUK MANAJEMEN PRODUK ---
+    Route::resource('produk', ProdukController::class);
+    // ----------------------------------------------------
+
     
-    // Route ini sekarang akan memiliki nama lengkap 'mitra.beranda'
-    Route::get('/beranda', [App\Http\Controllers\MitraDashboardController::class, 'index'])->name('beranda');
-
-    // Contoh untuk masa depan, route ini akan bernama 'mitra.profil'
-    // Route::get('/profil', ...)->name('profil');
-});
-
-// ... (grup route untuk pengguna)

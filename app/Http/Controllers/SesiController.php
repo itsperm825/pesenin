@@ -50,21 +50,25 @@ class SesiController extends Controller
             ->withInput($request->except('password'));
     }
 
-    public function register(Request $request) {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+    public function register(Request $request)
+    {
+        // ... (bagian validasi data Anda) ...
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'pengguna',
+            // Mungkin ada field lain di sini
         ]);
 
-        return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login untuk melanjutkan.');
+        // --- INI DIA BAGIAN PENTINGNYA ---
+        // Secara otomatis berikan peran 'pengguna' ke user yang baru dibuat.
+        $user->assignRole('pengguna');
+        // ------------------------------------
+
+        Auth::login($user);
+
+        return redirect('/login')->with('success', 'Registrasi berhasil, silakan login.');
     }
 
     public function logout(Request $request) {
