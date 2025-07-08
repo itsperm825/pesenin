@@ -9,25 +9,23 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    // dalam file ..._create_products_table.php
 
         public function up()
         {
             Schema::create('products', function (Blueprint $table) {
-                $table->id(); // Kolom ID utama untuk produk
+                $table->id();
 
-                // Kolom untuk menghubungkan produk ini dengan pemiliknya (mitra)
-                // Ini adalah foreign key ke tabel 'users'
+                // PASTIKAN BARIS INI ADA DI DALAMNYA
+                // Ini akan membuat kolom user_id sekaligus menghubungkannya ke tabel users
                 $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
-                // Kolom-kolom untuk detail produk
+                // Kolom-kolom lainnya
                 $table->string('nama_produk');
-                $table->text('deskripsi'); // 'text' untuk deskripsi yang bisa panjang
-                $table->decimal('harga', 10, 2); // 'decimal' adalah tipe terbaik untuk uang
+                $table->text('deskripsi');
+                $table->decimal('harga', 10, 2);
                 $table->integer('stok');
-                $table->string('gambar')->nullable(); // 'nullable' berarti gambar boleh kosong
-
-                $table->timestamps(); // Kolom created_at dan updated_at
+                $table->string('gambar')->nullable();
+                $table->timestamps();
             });
         }
 

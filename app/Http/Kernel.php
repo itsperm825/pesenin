@@ -36,6 +36,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
@@ -52,9 +53,11 @@ class Kernel extends HttpKernel
     'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
     // ... middleware standar lainnya
 
-    // --- DAFTAR PENJAGA KUSTOM KITA ---
-    'is-admin' => \App\Http\Middleware\CheckIsAdmin::class,
-    'is-mitra' => \App\Http\Middleware\CheckIsMitra::class,
-    'is-pengguna' => \App\Http\Middleware\CheckIsPengguna::class,
+    // // --- DAFTAR PENJAGA KUSTOM KITA ---
+    'role' => \App\Http\Middleware\CheckRole::class,
+    // PASTIKAN BARIS-BARIS INI BENAR
+    // 'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+    // 'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+    // 'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
 ];
 }

@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         :root {
             --primary: #FEA116;
@@ -113,14 +114,22 @@
     </style>
 </head>
 <body>
+
     <div class="login-container">
         <h2>Login Akun</h2>
-
-        @if (session('success') || session('error'))
+        {{-- @if (session('success') || session('error'))
             <div class="alert-container">
                 {{ session('success') ?? session('error') }}
             </div>
+        @endif --}}
+
+        {{-- INI DIA BAGIAN PENANGKAP SINYALNYA --}}
+        @if (session('success'))
+            <div class="alert-container">
+                {{ session('success') }}
+            </div>
         @endif
+        {{-- AKHIR BAGIAN PENANGKAP SINYAL --}}
 
         <form action="{{ route('login.post') }}" method="POST">
             @csrf
@@ -153,5 +162,17 @@
             <p>Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a></p>
         </div>
     </div>
+    @if (session('success'))
+    <script>
+        Swal.fire({
+            title: 'Berhasil!',
+            text: "{{ session('success') }}", // Mengambil pesan dari session
+            icon: 'success',
+            confirmButtonColor: '#FEA116', // Warna tombol sesuai tema Anda
+            confirmButtonText: 'OK'
+        });
+    </script>
+    @endif
+
 </body>
 </html>

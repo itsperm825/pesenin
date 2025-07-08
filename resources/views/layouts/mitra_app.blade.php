@@ -56,10 +56,17 @@
             </main>
         </div>
         </div>
-
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
     <script>
+        import Swal from 'sweetalert2/dist/sweetalert2.js'
+        import 'sweetalert2/src/sweetalert2.scss'
+
+        // or via CommonJS
+        const Swal = require('sweetalert2')
+
         var el = document.getElementById("wrapper");
         var toggleButton = document.getElementById("menu-toggle");
 

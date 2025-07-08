@@ -1,53 +1,51 @@
-@csrf 
-<div class="row">
-    <div class="col-md-8">
-        <div class="input-group input-group-outline my-3">
-            <label class="form-label">Nama Produk</label>
-            <input type="text" name="nama_produk" class="form-control" value="{{ old('nama_produk', $produk->nama_produk ?? '') }}">
-        </div>
-        @error('nama_produk') <div class="text-danger ps-1">{{ $message }}</div> @enderror
+@csrf
+<div class="card-body">
+    <div class="form-group">
+        <label for="nama_produk">Nama Produk</label>
+        {{-- Gunakan @isset untuk memeriksa apakah ini form edit atau create --}}
+        <input type="text" class="form-control @error('nama_produk') is-invalid @enderror" id="nama_produk" name="nama_produk" placeholder="Masukkan Nama Produk" value="{{ old('nama_produk', isset($produk) ? $produk->nama_produk : '') }}">
+        @error('nama_produk') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
-</div>
-<div class="row">
-    <div class="col-md-8">
-        <div class="input-group input-group-outline my-3">
-            <label class="form-label">Deskripsi</label>
-            <textarea name="deskripsi" class="form-control" rows="5">{{ old('deskripsi', $produk->deskripsi ?? '') }}</textarea>
-        </div>
-        @error('deskripsi') <div class="text-danger ps-1">{{ $message }}</div> @enderror
+
+    <div class="form-group">
+        <label for="deskripsi">Deskripsi</label>
+        <textarea class="form-control @error('deskripsi') is-invalid @enderror" rows="4" id="deskripsi" name="deskripsi" placeholder="Jelaskan tentang produk Anda">{{ old('deskripsi', isset($produk) ? $produk->deskripsi : '') }}</textarea>
+        @error('deskripsi') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="input-group input-group-outline my-3">
-            <label class="form-label">Harga (Rp)</label>
-            <input type="number" name="harga" class="form-control" value="{{ old('harga', $produk->harga ?? '') }}">
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="harga">Harga (Rp)</label>
+                <input type="number" class="form-control @error('harga') is-invalid @enderror" id="harga" name="harga" placeholder="Contoh: 15000" value="{{ old('harga', isset($produk) ? $produk->harga : '') }}">
+                @error('harga') <span class="text-danger">{{ $message }}</span> @enderror
+            </div>
         </div>
-        @error('harga') <div class="text-danger ps-1">{{ $message }}</div> @enderror
-    </div>
-    <div class="col-md-4">
-        <div class="input-group input-group-outline my-3">
-            <label class="form-label">Stok</label>
-            <input type="number" name="stok" class="form-control" value="{{ old('stok', $produk->stok ?? '') }}">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="stok">Stok</label>
+                <input type="number" class="form-control @error('stok') is-invalid @enderror" id="stok" name="stok" placeholder="Jumlah stok tersedia" value="{{ old('stok', isset($produk) ? $produk->stok : '') }}">
+                @error('stok') <span class="text-danger">{{ $message }}</span> @enderror
+            </div>
         </div>
-        @error('stok') <div class="text-danger ps-1">{{ $message }}</div> @enderror
     </div>
-</div>
-<div class="row">
-    <div class="col-md-8">
-        <label>Gambar Produk</label>
+
+    <div class="form-group">
+        <label for="gambar">Gambar Produk</label>
         @if(isset($produk) && $produk->gambar)
-            <img src="{{ asset('storage/' . $produk->gambar) }}" class="img-fluid border-radius-lg d-block my-2" width="200" alt="Current Image">
+            <img src="{{ asset('storage/' . $produk->gambar) }}" class="img-thumbnail d-block mb-2" width="200" alt="Current Image">
         @endif
-        <div class="input-group input-group-outline my-3">
-            <input type="file" name="gambar" class="form-control">
+        <div class="input-group">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input @error('gambar') is-invalid @enderror" id="gambar" name="gambar">
+                <label class="custom-file-label" for="gambar">Pilih file (Kosongkan jika tidak ganti)</label>
+            </div>
         </div>
-        @error('gambar') <div class="text-danger ps-1">{{ $message }}</div> @enderror
+        @error('gambar') <span class="text-danger">{{ $message }}</span> @enderror
     </div>
 </div>
-<div class="row">
-    <div class="col-12">
-        <button type="submit" class="btn bg-gradient-primary mt-3 mb-0">{{ $tombol }}</button>
-        <a href="{{ route('produk.index') }}" class="btn btn-outline-secondary mt-3 mb-0">Batal</a>
-    </div>
+<div class="card-footer">
+    <button type="submit" class="btn btn-primary">{{ $tombol }}</button>
+    {{-- Perbaiki nama rute ini jika Anda masih menggunakan prefix 'mitra.' --}}
+    <a href="{{ route('produk.index') }}" class="btn btn-secondary">Batal</a>
 </div>

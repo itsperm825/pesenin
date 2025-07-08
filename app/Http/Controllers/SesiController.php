@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+
 class SesiController extends Controller
 {
     public function index() {
@@ -21,35 +22,64 @@ class SesiController extends Controller
         return view('home.register');
     }
 
-    public function login(Request $request) {
-        $request->validate([
-            "email" => "required|email",
-            "password" => "required",
-            "role" => "required|in:pengguna,mitra",
+    // app/Http/Controllers/SesiController.php
+
+    public function login(Request $request)
+    {
+        // 1. Validasi input form. Peran tidak perlu divalidasi di sini.
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
 
-        $credentials = [
-            'email' => $request->email,
-            'password' => $request->password,
-            'role' => $request->role,
-        ];
-
+        // 2. Coba lakukan autentikasi HANYA dengan email dan password
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+            
+            // 3. Pengecekan peran SETELAH login berhasil
+            // Ini memastikan user 'mitra' tidak bisa login via tab 'pengguna' dan sebaliknya
             $user = Auth::user();
-
-            if ($user->role == 'mitra') {
-                return redirect()->route('mitra.beranda');
+            if ($user->role !== $request->role) {
+                Auth::logout(); // Jika peran tidak cocok, paksa logout lagi
+                return back()->withErrors([
+                    'email' => 'Anda mencoba login dengan tipe akun yang salah.',
+                ])->onlyInput('email');
             }
-            // Defaultnya adalah pengguna
-            return redirect()->route('pengguna.beranda');
+
+            // 4. Jika semua cocok, regenerasi session
+            $request->session()->regenerate();
+
+            // 5. Arahkan ke halaman yang benar menggunakan method redirectTo()
+            return redirect()->intended($this->redirectTo());
         }
 
-        return redirect()->back()
-            ->with('error', 'Login gagal! Pastikan email, password, dan tipe akun Anda sudah benar.')
-            ->withInput($request->except('password'));
+        // 6. Jika email atau password salah
+        return back()->withErrors([
+            'email' => 'Email atau Password yang Anda masukkan tidak valid.',
+        ])->onlyInput('email');
     }
 
+    public function redirectTo()
+    {
+        // Ambil data peran dari user yang baru saja login
+        $role = Auth::user()->role;
+
+        // Gunakan switch case untuk menentukan URL tujuan
+        switch ($role) {
+            case 'admin':
+                return '/admin/dashboard'; // Ganti dengan URL dasbor admin Anda
+                break;
+            case 'mitra':
+                return '/mitra/dashboard'; // URL dasbor mitra
+                break;
+            case 'pengguna':
+                return '/pengguna/beranda'; // URL dasbor pengguna
+                break;
+            default:
+                return '/home'; // URL default jika peran tidak dikenali
+                break;
+        }
+    }
+    
     public function register(Request $request)
     {
         // ... (bagian validasi data Anda) ...
@@ -63,7 +93,7 @@ class SesiController extends Controller
 
         // --- INI DIA BAGIAN PENTINGNYA ---
         // Secara otomatis berikan peran 'pengguna' ke user yang baru dibuat.
-        $user->assignRole('pengguna');
+        // $user->assignRole('pengguna');
         // ------------------------------------
 
         Auth::login($user);

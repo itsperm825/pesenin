@@ -7,6 +7,7 @@ use App\Models\Product; // Import model Product yang sudah kita buat
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // Import class Auth untuk mendapatkan data user yang login
 use Illuminate\Support\Facades\Storage; // Import Storage untuk mengelola file gambar
+use Barryvdh\DomPDF\Facade\Pdf; // Import PDF facade untuk membuat PDF
 
 class ProdukController extends Controller
 {
@@ -15,24 +16,12 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        // 1. Ambil ID user (mitra) yang sedang login
-        $mitraId = auth()->id();
-
-        // 2. Ambil semua produk dari database DI MANA 'user_id' sama dengan ID mitra yang login
-        //    - latest() untuk mengurutkan dari yang terbaru
-        //    - paginate(10) untuk membatasi 10 produk per halaman (baik untuk performa)
-        $produks = Product::where('user_id', $mitraId)->latest()->paginate(10);
-
-        // 3. Tampilkan view 'index' dan kirim data produk ke dalamnya
+        $produks = Product::where('user_id', Auth::id())->latest()->paginate(10);
         return view('mitra.produk.index', compact('produks'));
     }
 
-    /**
-     * Menampilkan form untuk membuat produk baru.
-     */
     public function create()
     {
-        // Tugas method ini hanya menampilkan halaman form
         return view('mitra.produk.create');
     }
 
@@ -50,21 +39,19 @@ class ProdukController extends Controller
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Gambar boleh kosong, tapi jika ada harus berupa file gambar
         ]);
 
-        // 2. Siapkan data untuk disimpan
         $data = $request->all();
+        $data['user_id'] = Auth::id();
 
-        // 3. Set user_id dengan ID mitra yang sedang login. INI PENTING UNTUK KEPEMILIKAN
-        $data['user_id'] = auth()->id();
-
-        // 4. Proses upload gambar jika ada
+        // PASTIKAN BLOK INI ADA DAN BENAR
         if ($request->hasFile('gambar')) {
-            $data['gambar'] = $request->file('gambar')->store('gambar-produk', 'public');
+            // 'gambar-produk' adalah nama folder di dalam storage/app/public
+            // 'public' berarti file ini bisa diakses secara publik
+            $path = $request->file('gambar')->store('gambar-produk', 'public');
+            $data['gambar'] = $path; // Simpan path ke dalam array data
         }
 
-        // 5. Simpan data ke tabel 'products'
         Product::create($data);
 
-        // 6. Alihkan kembali ke halaman daftar produk dengan pesan sukses
         return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan.');
     }
 
@@ -72,11 +59,11 @@ class ProdukController extends Controller
      * Menampilkan form untuk mengedit produk yang sudah ada.
      * Laravel secara otomatis akan mencari produk berdasarkan ID di URL (Route Model Binding).
      */
-    public function edit(Product $produk)
+     public function edit(Product $produk)
     {
-        // PENTING: Pengecekan otorisasi untuk memastikan mitra hanya bisa mengedit produknya sendiri
-        if ($produk->user_id !== auth()->id()) {
-            abort(403, 'AKSES DITOLAK. ANDA BUKAN PEMILIK PRODUK INI.');
+        // Otorisasi: Pastikan mitra hanya bisa edit produknya sendiri
+        if ($produk->user_id !== Auth::id()) {
+            abort(403, 'AKSES DITOLAK');
         }
         
         // Tampilkan view 'edit' dan kirim data produk yang ingin diedit
@@ -88,12 +75,12 @@ class ProdukController extends Controller
      */
     public function update(Request $request, Product $produk)
     {
-        // Pengecekan otorisasi
-        if ($produk->user_id !== auth()->id()) {
-            abort(403, 'AKSES DITOLAK.');
+        // Otorisasi: Pastikan mitra hanya bisa update produknya sendiri
+        if ($produk->user_id !== Auth::id()) {
+            abort(403, 'AKSES DITOLAK');
         }
 
-        // Validasi data (mirip seperti store)
+        // Validasi data (mirip seperti store, tapi password gambar tidak wajib)
         $validatedData = $request->validate([
             'nama_produk' => 'required|string|max:255',
             'deskripsi' => 'required|string',
@@ -102,9 +89,9 @@ class ProdukController extends Controller
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Jika ada file gambar baru yang di-upload
+        // Logika untuk update gambar jika ada gambar baru yang di-upload
         if ($request->hasFile('gambar')) {
-            // Hapus gambar lama untuk menghemat space
+            // Hapus gambar lama jika ada untuk menghemat storage
             if ($produk->gambar) {
                 Storage::disk('public')->delete($produk->gambar);
             }
@@ -115,7 +102,32 @@ class ProdukController extends Controller
         // Update data produk di database
         $produk->update($validatedData);
 
+        // Alihkan kembali ke halaman daftar produk dengan pesan sukses
         return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui.');
+    }
+
+
+        public function cetak()
+        {
+            // KITA KEMBALI GUNAKAN CARA INI YANG LEBIH PASTI
+            // Ambil semua produk yang user_id-nya cocok dengan ID user yang login
+            $produks = Product::where('user_id', Auth::id())->get();
+            
+            $mitra = Auth::user(); 
+
+            $data = [
+                'tanggal' => date('d/m/Y'),
+                'produks' => $produks,
+                'mitra' => $mitra
+            ];
+            
+            // Kirim data ke view
+            return view('mitra.produk.cetak-pdf', $data);
+        }
+
+        public function show(Product $produk)
+    {
+        return redirect()->route('mitra.produk.edit', $produk->id);
     }
 
     /**
@@ -124,7 +136,7 @@ class ProdukController extends Controller
     public function destroy(Product $produk)
     {
         // Pengecekan otorisasi
-        if ($produk->user_id !== auth()->id()) {
+        if ($produk->user_id !== Auth::id()) {
             abort(403, 'AKSES DITOLAK.');
         }
 

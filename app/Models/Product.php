@@ -23,6 +23,9 @@ class Product extends Model
         'gambar',
         // 'category_id', // Aktifkan jika Anda sudah punya tabel kategori
     ];
+    public function orderItems() {
+    return $this->hasMany(OrderItem::class);
+}
 
     /**
      * Mendefinisikan relasi "belongsTo" ke model User.

@@ -2,52 +2,56 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\UserRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Illuminate\Support\Facades\Hash;
 
 class UserCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
 
     public function setup()
     {
         CRUD::setModel(\App\Models\User::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/user');
-        CRUD::setEntityNameStrings('user', 'users');
+        CRUD::setEntityNameStrings('pengguna', 'pengguna');
+
+        // Hanya tampilkan user dengan peran 'pengguna'
+        CRUD::addClause('where', 'role', '=', 'pengguna');
     }
 
     protected function setupListOperation()
     {
         CRUD::column('name')->label('Nama');
         CRUD::column('email')->label('Email');
-        CRUD::column('role')->label('Role')->wrapper(function ($entry) {
-            if ($entry->role == 'admin') return '<span class="badge bg-primary">Admin</span>';
-            if ($entry->role == 'mitra') return '<span class="badge bg-info text-dark">Mitra</span>';
-            return '<span class="badge bg-secondary">Pengguna</span>';
-        });
-        CRUD::column('email_verified_at')->label('Terverifikasi')->type('check');
+        CRUD::column('created_at')->label('Tanggal Gabung');
     }
 
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(UserRequest::class);
-        CRUD::field('name')->label('Nama Lengkap');
-        CRUD::field('email')->label('Alamat Email');
-        CRUD::field('password')->label('Password')->type('password');
-        CRUD::field('role')->label('Role')->type('select_from_array')->options([
-            'pengguna' => 'Pengguna (Pembeli)',
-            'mitra' => 'Mitra (Penjual)',
-            'admin' => 'Admin'
-        ])->allows_null(false)->default('pengguna');
+        CRUD::setValidation([
+            'name' => 'required|min:2',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+        ]);
+
+        CRUD::field('name')->label('Nama');
+        CRUD::field('email')->label('Email');
+        CRUD::field('password')->label('Password');
+        
+        // Secara otomatis set peran ke 'pengguna' saat membuat user baru
+        CRUD::field('role')->type('hidden')->value('pengguna');
     }
 
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation(); // Gunakan field yang sama, tapi password tidak required
-        CRUD::field('password')->label('Password Baru')->type('password')->nullable();
+        // Validasi untuk update (email boleh sama untuk user ini)
+        CRUD::setValidation([
+            'name' => 'required|min:2',
+            'email' => 'required|email|unique:users,email,' . CRUD::getCurrentEntryId(),
+        ]);
+        $this->setupCreateOperation();
     }
 }

@@ -8,13 +8,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use laravel\Sanctum\HasApiTokens;
+use App\Models\Product;
 
 class User extends Authenticatable
 {
     use CrudTrait;
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-    use HasRoles;
+
 
     protected $guard_name = 'web'; // or whatever guard you want to use
 
@@ -52,8 +54,25 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function mitra()
-    {
-        return $this->hasOne(Mitra::class);
+    // di dalam class User
+
+    public function orders() {
+    return $this->hasMany(Order::class);
     }
+
+    /**
+     * Satu User memiliki banyak OrderItem.
+     */
+
+/**
+ * Satu User memiliki satu profil Mitra.
+ */
+public function mitra()
+{
+    return $this->hasOne(Mitra::class);
+}
+public function products()
+{
+    return $this->hasMany(Product::class);
+}
 }

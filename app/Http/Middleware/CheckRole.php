@@ -13,19 +13,13 @@ class CheckRole
     /**
      * Handle an incoming request.
      */
-    public function handle(Request $request, Closure $next, string $role): Response
+    public function handle($request, Closure $next, string $role): Response
     {
         // Cek apakah user sudah login
-        if (!Auth::check()) {
-            abort(403, 'AKSES DITOLAK: ANDA HARUS LOGIN.');
+        if (Auth::check() && Auth::user()->role === $role) {
+            return $next($request);
         }
 
-        // Cek apakah user diizinkan melewati gerbang yang sesuai dengan rolenya
-        // Contoh: jika route memakai role:mitra, maka akan dicek Gate::allows('isMitra')
-        // if (!Gate::allows('is'.ucfirst($role))) {
-        //     abort(403, 'AKSES DITOLAK: ANDA TIDAK MEMILIKI HAK AKSES UNTUK HALAMAN INI.');
-        // }
-
-        return $next($request);
+        return redirect('/login')->withErrors('Tidak memiliki akses.');
     }
 }
